@@ -26,7 +26,7 @@ Initially an abandoned bitbucket repo, but lotsa love has been given to it.
 
 Initial repo: [https://bitbucket.org/east301/java-keyring](https://bitbucket.org/east301/java-keyring)
 
-Cloned from: [https://bitbucket.org/bpsnervepoint/java-keyring](https://bitbucket.org/bpsnervepoint/java-keyring)
+Cloned from: [https://github.com/javakeyring/java-keyring](https://github.com/javakeyring/java-keyring)
 
 ## Security Issues ##
 
@@ -79,7 +79,7 @@ Recommend creating a dummy value if getPassword() fails, so that users know wher
       keyring.setPassword(domain, account, "ChangeMe");
       throw new RuntimeException("Please add the correct credentials to you keystore " 
           + keyring.getKeyringStorageType()
-          + ". The credential is stored under '" + domain + "|" + account + "'"
+          + ". The credential is stored under '" + account + "@" + domain + "'"
           + "with a password that is currently 'ChangeMe'");
     }
 ```
