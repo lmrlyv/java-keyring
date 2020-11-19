@@ -56,7 +56,7 @@ public class WinCredentialStoreBackend implements KeyringBackend {
     PointerByReference ref = new PointerByReference();
     DWORD type = new DWORD(1L);
     DWORD unused = new DWORD(0L);
-    Boolean success = nativeLibraries.getAdvapi32().CredReadA(service + '|' + account, type, unused, ref);
+    Boolean success = nativeLibraries.getAdvapi32().CredReadA(account + '@' + service, type, unused, ref);
     if (!success) {
       throw new PasswordAccessException("Error code " + nativeLibraries.getKernel32().GetLastError());
     }
@@ -74,7 +74,7 @@ public class WinCredentialStoreBackend implements KeyringBackend {
   @Override
   public void setPassword(String service, String account, String password) throws PasswordAccessException {
     CREDENTIAL cred = new CREDENTIAL();
-    cred.TargetName = service + '|' + account;
+    cred.TargetName = account + '@' + service;
     cred.UserName = account;
     cred.Type = 1;
     byte[] bytes = password.getBytes(Charset.forName("UTF-16LE"));
@@ -92,7 +92,7 @@ public class WinCredentialStoreBackend implements KeyringBackend {
 
   @Override
   public void deletePassword(String service, String account) throws PasswordAccessException {
-    boolean success = nativeLibraries.getAdvapi32().CredDeleteA(service + '|' + account, new DWORD(1), new DWORD(0));
+    boolean success = nativeLibraries.getAdvapi32().CredDeleteA(account + '@' + service, new DWORD(1), new DWORD(0));
     if (!success) {
       throw new PasswordAccessException("Error code " + nativeLibraries.getKernel32().GetLastError().intValue());
     }   
